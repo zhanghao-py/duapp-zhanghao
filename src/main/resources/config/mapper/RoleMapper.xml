@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baidu.foo.ssh.dao.RoleDao">
+
+
+	<select id="loadAllRoles" resultType="com.baidu.foo.ssh.bo.Role">
+		select id, name from role
+	</select>
+	
+	<insert id="addRole" parameterType="com.baidu.foo.ssh.bo.Role" useGeneratedKeys="true" keyProperty="id">
+		insert into role (name) values (#{name,jdbcType=VARCHAR})
+	</insert>
+
+
+
+</mapper>
+
