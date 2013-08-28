@@ -183,8 +183,21 @@
 			<groupId>javax.jws</groupId>
 			<artifactId>jsr181-api</artifactId>
 			<version>${javax.jws.version}</version>
-		</dependency>	
-		
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.baidu.passport</groupId>
+			<artifactId>baidu-api</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/WebContent/Web-INF/lib/baidu-api-sdk-java.jar</systemPath>
+		</dependency>
 
 
 	</dependencies>

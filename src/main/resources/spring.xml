@@ -23,8 +23,11 @@
 		</property>
 	</bean>
 
-	<import resource="classpath:config/spring-dataSource.xml" />
-	<import resource="classpath:config/spring-beans.xml" />
+	<import resource="classpath:spring-dataSource.xml" />
+	<import resource="classpath:spring-beans.xml" />
+	
+	<!-- 
 	<import resource="classpath:config/spring-cxf.xml" />
+	-->
 
 </beans>
