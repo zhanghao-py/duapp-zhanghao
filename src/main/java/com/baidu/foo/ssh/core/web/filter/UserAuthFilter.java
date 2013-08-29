@@ -47,6 +47,7 @@ public class UserAuthFilter implements Filter {
         	// 获取当前登陆者
         	User user = session.getUser();
         	log.info(user.getUname());
+        	chain.doFilter(request, response);
         	
         } else {
         
@@ -60,9 +61,9 @@ public class UserAuthFilter implements Filter {
 	            String authorizeUrl = baidu.getBaiduOAuth2Service().getAuthorizeUrl(params);
 	            res.sendRedirect(authorizeUrl);
 	        } catch (BaiduOAuthException e) {
-	            log.debug("BaiduOAuthException ", e);
+	            log.warn("BaiduOAuthException ", e);
 	        } catch (BaiduApiException e) {
-	            log.debug("BaiduApiException ", e);
+	            log.warn("BaiduApiException ", e);
 	        }
         }
         
