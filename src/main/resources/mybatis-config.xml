@@ -3,8 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+	<!--
 	<plugins>
 		<plugin interceptor="com.baidu.foo.ssh.core.mybatis.interceptor.PaginationInterceptor" />
 	</plugins>
-
+	-->
+	
 </configuration>
