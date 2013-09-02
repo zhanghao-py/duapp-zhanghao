@@ -11,12 +11,14 @@
 	<http pattern="/css/**" security="none" />
 	<http pattern="/images/**" security="none" />
 
-	<http auto-config="false" entry-point-ref="loginUrlEntryPoint">
+	<http entry-point-ref="forbiddenEntryPoint">
+		
+    	<logout />
 		
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER" /> 
 		
-		<custom-filter after="FILTER_SECURITY_INTERCEPTOR" ref="userAuthFilter" />
+		<custom-filter before="BASIC_AUTH_FILTER" ref="userAuthFilter" />
 		<!--
 		<form-login login-page="/spring_security_login" />
 		<logout invalidate-session="true" logout-success-url="/"
@@ -25,8 +27,16 @@
 		
 	</http>
 	
-	<beans:bean id="loginUrlEntryPoint" class="com.baidu.foo.ssh.core.web.filter.LoginUrlEntryPoint" />  
+	<beans:bean id="forbiddenEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
+	</beans:bean>
+
+	<beans:bean id="loginUrlEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/index.jsp" />
+	</beans:bean>
 	
+	<!--
+	<beans:bean id="loginUrlEntryPoint" class="com.baidu.foo.ssh.core.web.filter.LoginUrlEntryPoint" />  
+	-->
 	<beans:bean id="userAuthFilter" class="com.baidu.foo.ssh.core.web.filter.UserAuthFilter"/>
 
 	<authentication-manager alias="authenticationManager">
