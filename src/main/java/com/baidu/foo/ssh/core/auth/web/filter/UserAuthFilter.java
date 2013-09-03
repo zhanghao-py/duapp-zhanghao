@@ -1,4 +1,4 @@
-package com.baidu.foo.ssh.core.web.filter;
+package com.baidu.foo.ssh.core.auth.web.filter;
 
 import java.io.IOException;
 import java.util.HashMap;

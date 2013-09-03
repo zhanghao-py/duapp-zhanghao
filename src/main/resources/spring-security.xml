@@ -11,7 +11,9 @@
 	<http pattern="/css/**" security="none" />
 	<http pattern="/images/**" security="none" />
 
-	<http entry-point-ref="forbiddenEntryPoint">
+	<http entry-point-ref="forbiddenEntryPoint"
+		access-decision-manager-ref="authorityAccessDecisionManager"
+		authentication-manager-ref="authenticationManager">
 		
     	<logout />
 		
@@ -19,25 +21,30 @@
 		<intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER" /> 
 		
 		<custom-filter before="BASIC_AUTH_FILTER" ref="userAuthFilter" />
-		<!--
-		<form-login login-page="/spring_security_login" />
-		<logout invalidate-session="true" logout-success-url="/"
-			logout-url="/j_spring_security_logout" />
-		-->
 		
 	</http>
 	
+	<beans:bean id="authorityAccessDecisionManager"
+        class="com.baidu.foo.ssh.core.web.filter.AuthorityAccessDecisionManager">
+        <beans:property name="decisionVoters">
+        	<beans:list>
+        		<beans:bean class="org.springframework.security.access.vote.RoleVoter" />
+        	</beans:list>
+        </beans:property>
+    </beans:bean>
+	
 	<beans:bean id="forbiddenEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
 	</beans:bean>
-
+	
+	<!--
 	<beans:bean id="loginUrlEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
 		<beans:property name="loginFormUrl" value="/index.jsp" />
 	</beans:bean>
 	
-	<!--
+	
 	<beans:bean id="loginUrlEntryPoint" class="com.baidu.foo.ssh.core.web.filter.LoginUrlEntryPoint" />  
 	-->
-	<beans:bean id="userAuthFilter" class="com.baidu.foo.ssh.core.web.filter.UserAuthFilter"/>
+	<beans:bean id="userAuthFilter" class="com.baidu.foo.ssh.core.auth.web.filter.UserAuthFilter"/>
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
