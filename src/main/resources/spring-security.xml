@@ -10,50 +10,65 @@
 	<http pattern="/js/**" security="none" />
 	<http pattern="/css/**" security="none" />
 	<http pattern="/images/**" security="none" />
+	<http pattern="/index.jsp" security="none" />
 
-	<http entry-point-ref="forbiddenEntryPoint"
-		access-decision-manager-ref="authorityAccessDecisionManager"
-		authentication-manager-ref="authenticationManager">
+	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+	
+		<logout/>
 		
-    	<logout />
-		
-		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-		<intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER" /> 
-		
-		<custom-filter before="BASIC_AUTH_FILTER" ref="userAuthFilter" />
+		<custom-filter position="FORM_LOGIN_FILTER" ref="loginFilter" />
+		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="securityFilter" />
 		
 	</http>
 	
-	<beans:bean id="authorityAccessDecisionManager"
-        class="com.baidu.foo.ssh.core.web.filter.AuthorityAccessDecisionManager">
+	<!-- 未登录的切入点 -->
+    <beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">  
+        <beans:property name="loginFormUrl" value="/login.jsp" />  
+    </beans:bean> 
+	
+	<!-- 登录过滤器 -->
+	<beans:bean id="loginFilter" class="com.baidu.foo.ssh.core.auth.LoginFilter">
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />
+		<beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
+	</beans:bean>
+	
+	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+	</beans:bean>
+    
+	<beans:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">    
+        <beans:property name="defaultFailureUrl" value="/login.jsp" />
+    </beans:bean>
+
+	<!-- 访问控制验证器Authority -->
+	<beans:bean id="securityFilter" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<!-- 用户拥有的权限 -->
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+		<!-- 资源与权限对应关系 -->
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+	</beans:bean>
+	
+	<beans:bean id="userDetailService" class="com.baidu.foo.ssh.core.auth.UserDetailServiceImpl" />
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="userDetailService">
+			<password-encoder hash="md5" />
+		</authentication-provider>
+	</authentication-manager>
+	
+	<beans:bean id="accessDecisionManager"
+        class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:property name="allowIfAllAbstainDecisions" value="false"/>
         <beans:property name="decisionVoters">
         	<beans:list>
         		<beans:bean class="org.springframework.security.access.vote.RoleVoter" />
         	</beans:list>
         </beans:property>
     </beans:bean>
-	
-	<beans:bean id="forbiddenEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
-	</beans:bean>
-	
-	<!--
-	<beans:bean id="loginUrlEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-		<beans:property name="loginFormUrl" value="/index.jsp" />
-	</beans:bean>
-	
-	
-	<beans:bean id="loginUrlEntryPoint" class="com.baidu.foo.ssh.core.web.filter.LoginUrlEntryPoint" />  
-	-->
-	<beans:bean id="userAuthFilter" class="com.baidu.foo.ssh.core.auth.web.filter.UserAuthFilter"/>
-
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider>
-			<password-encoder hash="md5" />
-			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select username, password, enabled from user where username = ?"
-				authorities-by-username-query="select u.username, r.name from user u left join user_role ur on u.id = ur.uid left join role r on r.id = ur.rid where u.username = ?" />
-		</authentication-provider>
-	</authentication-manager>
-
+    
+    <beans:bean id="securityMetadataSource" class="com.baidu.foo.ssh.core.auth.SecurityMetadataSource" />
 
 </beans:beans>

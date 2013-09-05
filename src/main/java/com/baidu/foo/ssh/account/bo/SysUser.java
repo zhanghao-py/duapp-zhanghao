@@ -1,8 +1,8 @@
-package com.baidu.foo.ssh.bo;
+package com.baidu.foo.ssh.account.bo;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class SysUser implements Serializable {
 
 	private static final long serialVersionUID = -8138447347176260275L;
 
