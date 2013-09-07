@@ -43,7 +43,9 @@ public class SecurityMetadataSource implements FilterInvocationSecurityMetadataS
 		HttpServletRequest request = ((FilterInvocation) object).getRequest();
 		String requestUrl = request.getRequestURI();
 		
-		log.info("requestUrl is " + requestUrl);
+		if (log.isDebugEnabled()) {
+			log.debug("requestUrl is " + requestUrl);
+		}
 		
 		Iterator<String> iter = resourceMap.keySet().iterator();
 		while (iter.hasNext()) {

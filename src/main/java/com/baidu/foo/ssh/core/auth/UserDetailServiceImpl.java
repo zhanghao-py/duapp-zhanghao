@@ -34,7 +34,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		
-		log.info("username is " + username);
+		if (log.isDebugEnabled()) {
+			log.debug("username is " + username);
+		}
 
 		SysUser user = userService.findUserByUsername(username);
 		if (user == null) {

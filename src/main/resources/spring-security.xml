@@ -43,7 +43,7 @@
 	</beans:bean>
     
 	<beans:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">    
-        <beans:property name="defaultFailureUrl" value="/login.jsp" />
+        <beans:property name="defaultFailureUrl" value="/authentication_failure.jsp" />
     </beans:bean>
 
 	<!-- 访问控制验证器Authority -->
