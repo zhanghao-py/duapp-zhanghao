@@ -10,7 +10,10 @@
 	<http pattern="/js/**" security="none" />
 	<http pattern="/css/**" security="none" />
 	<http pattern="/images/**" security="none" />
-	<http pattern="/index.jsp" security="none" />
+	<http pattern="/favicon.ico" security="none" />
+	<http pattern="/*.jsp" security="none" />
+	
+	
 
 	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
 	
@@ -22,9 +25,13 @@
 	</http>
 	
 	<!-- 未登录的切入点 -->
+	<beans:bean id="authenticationProcessingFilterEntryPoint" class="com.baidu.foo.ssh.core.auth.AuthenticationProcessingFilterEntryPoint" />
+    
+    <!--
     <beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">  
         <beans:property name="loginFormUrl" value="/login.jsp" />  
-    </beans:bean> 
+    </beans:bean>
+	-->
 	
 	<!-- 登录过滤器 -->
 	<beans:bean id="loginFilter" class="com.baidu.foo.ssh.core.auth.LoginFilter">
@@ -55,7 +62,9 @@
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="userDetailService">
+			<!--
 			<password-encoder hash="md5" />
+			-->
 		</authentication-provider>
 	</authentication-manager>
 	
