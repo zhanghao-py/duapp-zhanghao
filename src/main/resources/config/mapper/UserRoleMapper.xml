@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baidu.foo.ssh.account.dao.UserRoleDao">
+
+	<resultMap type="com.baidu.foo.ssh.account.bo.SysUserRole" id="roleResultMap">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="role_id" property="roleId" jdbcType="BIGINT" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.baidu.foo.ssh.account.bo.SysUserRole" keyProperty="id">
+		insert into user_role (user_id, role_id) 
+		values (
+			#{userId, jdbcType=BIGINT},
+			#{roleId, jdbcType=BIGINT}
+		) 
+	</insert>
+	
+
+</mapper>
+

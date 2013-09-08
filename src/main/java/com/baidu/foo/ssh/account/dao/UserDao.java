@@ -6,4 +6,8 @@ public interface UserDao {
 
 	SysUser findUserByUsername(String username);
 
+	void save(SysUser user);
+
+	void update(SysUser user);
+
 }

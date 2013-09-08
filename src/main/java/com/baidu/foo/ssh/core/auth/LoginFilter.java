@@ -54,13 +54,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 			throw new AuthenticationServiceException("user has not logged in!");
 		}
 		
+		Long uid = user.getUid();
         String username = user.getUname();
         String password = "";
 		
         SysUser sysUser = userService.findUserByUsername(username);
         
         if(sysUser == null) {
-        	throw new AuthenticationServiceException("username is not found!");
+        	userService.addUserFromPassport(uid, username);
+//        	throw new AuthenticationServiceException("username is not found!");
         }
         
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);

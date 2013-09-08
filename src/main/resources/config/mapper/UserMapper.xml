@@ -5,16 +5,27 @@
 	<resultMap type="com.baidu.foo.ssh.account.bo.SysUser" id="userResultMap">
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="username" property="username" jdbcType="VARCHAR" />
+		<!--
 		<result column="password" property="password" jdbcType="VARCHAR" />
+		-->
 		<result column="enabled" property="enabled" jdbcType="BOOLEAN" />
 	</resultMap>
 
 	<select id="findUserByUsername" parameterType="java.lang.String" resultMap="userResultMap">
-		select id, username, password, enabled from user
+		select id, username, enabled from user
 		<where>
 			username = #{username, jdbcType=VARCHAR}
 		</where>
 	</select>
+	
+	<insert id="save" parameterType="com.baidu.foo.ssh.account.bo.SysUser" keyProperty="id">
+		insert into user (id, username, enabled) 
+		values (
+			#{id, jdbcType=BIGINT}, 
+			#{username, jdbcType=VARCHAR},
+			#{enabled, jdbcType=BOOLEAN}
+		) 
+	</insert>
 
 
 

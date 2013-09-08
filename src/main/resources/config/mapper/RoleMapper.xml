@@ -8,9 +8,16 @@
 	</resultMap>
 
 	<select id="findRolesByUserId" parameterType="java.lang.Long" resultMap="roleResultMap">
-		select r.id, r.name from role r left join user_role ur on r.id = ur.rid
+		select r.id, r.name from role r left join user_role ur on r.id = ur.role_id
 		<where>
-			ur.uid = #{userId, jdbcType=BIGINT}
+			ur.user_id = #{userId, jdbcType=BIGINT}
+		</where>
+	</select>
+	
+	<select id="findRoleByName" parameterType="java.lang.String" resultMap="roleResultMap">
+		select id, name from role
+		<where>
+			name = #{roleName, jdbcType=BIGINT}
 		</where>
 	</select>
 	

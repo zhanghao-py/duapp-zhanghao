@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class SysRole implements Serializable {
 	
+	public static enum Role {
+		ROLE_ADMIN,
+		ROLE_USER
+	}
+	
 	private static final long serialVersionUID = 2619123694997850172L;
 	
 	private Long id;
@@ -23,3 +28,4 @@ public class SysRole implements Serializable {
 	}
 
 }
+
