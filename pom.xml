@@ -28,7 +28,7 @@
 		<servlet-api.version>3.0.1</servlet-api.version>
 		<jsp-api.version>2.2</jsp-api.version>
 		<json-simple.version>1.1</json-simple.version>
-		<struts2.version>2.3.15.1</struts2.version>
+		<velocity-tools.version>2.0</velocity-tools.version>
 	</properties>
 
 	<dependencies>
@@ -73,6 +73,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -83,6 +84,12 @@
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
 			<version>${jsp-api.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -137,6 +144,11 @@
 			<artifactId>spring-web</artifactId>
 			<version>${springframework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -155,19 +167,21 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-core</artifactId>
-			<version>${struts2.version}</version>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>${velocity-tools.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-convention-plugin</artifactId>
-			<version>${struts2.version}</version>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-lgpl</artifactId>
+			<version>1.8.1</version>
 		</dependency>
+	
 		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-spring-plugin</artifactId>
-			<version>${struts2.version}</version>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-lgpl</artifactId>
+			<version>1.8.1</version>
 		</dependency>
 		
 		<dependency>
@@ -206,7 +220,13 @@
 			<artifactId>commons-lang</artifactId>
 			<version>${commons-lang.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
 
+		<!--
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-api</artifactId>
@@ -232,6 +252,7 @@
 			<artifactId>jsr181-api</artifactId>
 			<version>${javax.jws.version}</version>
 		</dependency>
+		-->
 
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
